@@ -106,8 +106,8 @@ bool Board::setWall(Position p, Orientation o) {
     return wallPlaced;
 }
 
-void Board::wallRollBack(Position p, Orientation o, bool hori, bool verti) {
-    wallss_[p.getRow()][p.getColumn()].rollBack(hori,verti);
+void Board::wallRollBack(Position p, Orientation o) {
+    wallss_[p.getRow()][p.getColumn()].rollBack();
     switch(o) {
     case Orientation::HORIZONTAL:
         if(p.getColumn() > 0) wallss_[p.getRow()][p.getColumn()-1].wallCanBeHorizontal();

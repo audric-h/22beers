@@ -22,7 +22,7 @@ public:
     void wallCanBeHorizontal();
     void wallCanBeVertical();
     Orientation getOrientation();
-    void rollBack(bool hori, bool verti);
+    void rollBack();
     bool getHorizontal();
     bool getVertical();
 

@@ -6,7 +6,11 @@ namespace quoridor {
 Game::Game(std::vector<std::string> names, unsigned size) : board_(Board(size)) {
     if(names.size() != 2 && names.size() != 4) throw std::invalid_argument { "Nombre de joueurs invalide." };
     for(unsigned i=0; i<names.size(); i++) {
-        players_.push_back(Player(names[i]));
+        if(names.size() == 2) {
+            players_.push_back(Player(names[i],size+1));
+        } else if (names.size() == 4) {
+            players_.push_back(Player(names[i], (size+1)/2));
+        }
         board_.getCase(players_[i].getPosition()).setIdPlayerOnMe(i);
     }
     idCurrent_ = 0;
@@ -59,7 +63,28 @@ bool Game::playMove(Direction d, bool playerAlreadyOnCase) {
         if(!playerAlreadyOnCase) board_.getCase(players_[idCurrent_].getPosition()).setIdPlayerOnMe(-1);
         players_[idCurrent_].move(d);
         if(board_.getCase(players_[idCurrent_].getPosition()).isThereAPlayerOnMe()) {
-            playMove(Display::chooseDirection(),true);
+            if(playerAlreadyOnCase) {
+                switch(d) {
+                case Direction::UP:
+                    players_[idCurrent_].getPosition().move(1,0);
+                    return false;
+                    break;
+                case Direction::DOWN:
+                    players_[idCurrent_].getPosition().move(-1,0);
+                    return false;
+                    break;
+                case Direction::LEFT:
+                    players_[idCurrent_].getPosition().move(0,1);
+                    return false;
+                    break;
+                case Direction::RIGHT:
+                    players_[idCurrent_].getPosition().move(0,-1);
+                    return false;
+                    break;
+                }
+            } else {
+                while(!playMove(Display::chooseDirection(),true));
+            }
         }
         board_.getCase(players_[idCurrent_].getPosition()).setIdPlayerOnMe(idCurrent_);
     }
@@ -68,36 +93,18 @@ bool Game::playMove(Direction d, bool playerAlreadyOnCase) {
 }
 
 bool Game::playWall(Position p, Orientation o) {
-    bool hori = board_.getWall(p).getHorizontal();
-    bool verti = board_.getWall(p).getVertical();
-    std::cout << std::boolalpha << "hori : " << hori << " verti : " << verti << std::endl;
+    if(players_[idCurrent_].getNbWall() == 0) return false;
     bool wallPlaced = board_.setWall(p,o);
-    std::cout << "wallplaced : " << std::boolalpha << wallPlaced << std::endl;
     if(wallPlaced) {
         board_.turnOffMarque();
         for(unsigned i=0; i<players_.size();i++) {
-            bool b = dfs(players_[i].getPosition(),i);
-            for(int i=0; i<Board::getSize();i++) {
-                for(int j=0; j<Board::getSize();j++) {
-                    std::cout << "(";
-                    if(board_.getCase(Position(i,j)).isMarqued()) std::cout << ".";
-                    else std::cout << " ";
-                    std::cout << ") ";
-                }
-                std::cout << std::endl;
-            }
-            std::cout << std::endl;
-            if(!b) {
-                board_.wallRollBack(p, o,hori,verti);
-                return false;
-            }
-            /*
             if(!dfs(players_[i].getPosition(),i)) {
-                board_.wallRollBack(p);
+                board_.wallRollBack(p,o);
                 return false;
-            }*/
+            }
         }
     }
+    if(wallPlaced) players_[idCurrent_].nbWallDecremente();
     return wallPlaced;
 }
 

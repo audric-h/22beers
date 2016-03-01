@@ -52,10 +52,8 @@ Orientation Wall::getOrientation() {
     return orientation_;
 }
 
-void Wall::rollBack(bool hori, bool verti) {
+void Wall::rollBack() {
     orientation_ = Orientation::NOTDEFINED;
-    canBeHorizontal_ = hori;
-    canBeVertical_ = verti;
 }
 
 bool Wall::getHorizontal() {

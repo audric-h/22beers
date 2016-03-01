@@ -28,7 +28,7 @@ public:
     bool canIGoLeft(Position p);
     bool canIGoRight(Position p);
     bool setWall(Position p, Orientation o);
-    void wallRollBack(Position p, Orientation o, bool hori, bool verti);
+    void wallRollBack(Position p, Orientation o);
     void turnOffMarque();
     Wall & getWall(Position p);
 

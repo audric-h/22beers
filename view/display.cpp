@@ -42,7 +42,7 @@ void Display::viewBoard(Board &b) {
 }
 
 void Display::player(quoridor::Player & p) {
-    std::cout << p.getName()<<"(joueur "<<p.getId() << ") : Il vous reste " << " murs." << std::endl;
+    std::cout << p.getName()<<"(joueur "<<p.getId() << ") : Il vous reste " << p.getNbWall() << " murs." << std::endl;
 }
 
 char Display::play() {

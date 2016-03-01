@@ -6,10 +6,11 @@ namespace quoridor {
 
 int Player::idCount = -1;
 
-Player::Player(std::string name) : position_(0,0) {
+Player::Player(std::string name, unsigned nbWall) : position_(0,0) {
     idCount++;
     id_ = idCount;
     name_ = name;
+    nbWall_ = nbWall;
     switch(id_) {
     case 0:
         position_ = Position(Board::getSize()-1,Board::getSize()/2);
@@ -40,15 +41,19 @@ Position & Player::getPosition() {
 bool Player::move(Direction d) {
     switch(d) {
     case Direction::UP:
+        std::cout << "Ma position : " << position_.getRow()-1 << " : " << position_.getColumn() << std::endl;
         return position_.move(-1,0);
         break;
     case Direction::DOWN:
+        std::cout << "Ma position : " << position_.getRow()+1 << " : " << position_.getColumn() << std::endl;
         return position_.move(1,0);
         break;
     case Direction::LEFT:
+        std::cout << "Ma position : " << position_.getRow() << " : " << position_.getColumn()-1 << std::endl;
         return position_.move(0,-1);
         break;
     case Direction::RIGHT:
+        std::cout << "Ma position : " << position_.getRow() << " : " << position_.getColumn()+1 << std::endl;
         return position_.move(0,1);
         break;
     default:
@@ -74,6 +79,14 @@ bool Player::isArrived() {
     default:
         return false;
     }
+}
+
+unsigned Player::getNbWall() {
+    return nbWall_;
+}
+
+void Player::nbWallDecremente() {
+    nbWall_--;
 }
 
 }
