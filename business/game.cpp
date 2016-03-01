@@ -151,4 +151,20 @@ bool Game::dfs(Position p, unsigned idPlayer) {
     return false;
 }
 
+std::vector<std::string>  Game::introGame() {
+    char c;
+    Display::intro();
+    c=Display::askForRules();
+    if (c=='o') Display::showRules();
+    std::vector<std::string>  noms = Display::registration();
+    return noms;
+
+}
+
+void Game::gameOver() {
+    while(!this->isOver()) {
+        this->play();
+    }
+}
+
 }

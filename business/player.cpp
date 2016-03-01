@@ -41,19 +41,15 @@ Position & Player::getPosition() {
 bool Player::move(Direction d) {
     switch(d) {
     case Direction::UP:
-        std::cout << "Ma position : " << position_.getRow()-1 << " : " << position_.getColumn() << std::endl;
         return position_.move(-1,0);
         break;
     case Direction::DOWN:
-        std::cout << "Ma position : " << position_.getRow()+1 << " : " << position_.getColumn() << std::endl;
         return position_.move(1,0);
         break;
     case Direction::LEFT:
-        std::cout << "Ma position : " << position_.getRow() << " : " << position_.getColumn()-1 << std::endl;
         return position_.move(0,-1);
         break;
     case Direction::RIGHT:
-        std::cout << "Ma position : " << position_.getRow() << " : " << position_.getColumn()+1 << std::endl;
         return position_.move(0,1);
         break;
     default:

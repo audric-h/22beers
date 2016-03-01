@@ -25,6 +25,8 @@ public:
     Game(std::vector<std::string> names, unsigned size=9);
     bool play();
     bool isOver();
+    static std::vector<std::string> introGame();
+    void gameOver();
 
 private:
 

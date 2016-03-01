@@ -5,6 +5,58 @@
 using namespace std;
 using namespace quoridor;
 
+void Display::intro() {
+
+    std::cout << std::endl;
+    std::cout << "                                     ========                          "<<std::endl;
+    std::cout << "                                     QUORIDOR                          "<<std::endl;
+    std::cout << "                                     ========                          "<<std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+}
+
+char Display::askForRules() {
+    char c;
+    do {
+        try {
+            std::cout << "Voulez-vous lire les regles du jeu ?(o/n):" <<std::endl;
+            c = nvs::lineFromKbd<char>();
+        } catch (const std::exception & e) {
+            std::cout << "Action impossible, reessayer." << std::endl;
+        }
+    } while (c != 'o' && c != 'n');
+    return c;
+}
+
+void Display::showRules() {
+    std::cout << "Voici les regles du jeu:..."<<std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+}
+
+std::vector<std::string>  Display::registration() {
+    std::cout << "La partie commence !!"<<std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+    unsigned nJoueurs;
+    do {
+        try {
+            std::cout << "nombre de joueurs(2 ou 4):";
+            nJoueurs = nvs::lineFromKbd<unsigned>();
+        }catch (const std::exception & e){
+            std::cout << "Action impossible, reessayer." << std::endl;
+        }
+    }while (nJoueurs != 2 && nJoueurs != 4);
+    std::vector<std::string> nom(nJoueurs);
+    for (unsigned i{0};i<nJoueurs;i++) {
+        std::cout << "nom du joueur " << i << ":";
+        nom[i] = nvs::lineFromKbd<std::string>();
+    }
+    return nom;
+}
+
+
 void Display::viewBoard(Board &b) {
     for(unsigned i= 0; i<b.getSize();i++) {
         for(unsigned j=0; j<b.getSize();j++) {

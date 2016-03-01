@@ -7,6 +7,10 @@
 class Display
 {
 public:
+    static void intro();
+    static char askForRules();
+    static void showRules();
+    static std::vector<std::string> registration();
     static void viewBoard(quoridor::Board & b);
     static void player(quoridor::Player & p);
     static char play();
